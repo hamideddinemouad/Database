@@ -1,0 +1,33 @@
+ INSERT INTO `clients` VALUES
+    -> (1,'mouad','17 rue tabit mohamed','0637275511'),
+    -> (2,'abdelah','abdelah adress','0645781122'),
+    -> (3,'mouad','mouad adress','0625222222'),
+    -> (4,'shinigami','the sky','0600000000');
+
+INSERT INTO `cars` VALUES 
+('ABC123','Toyota','Corolla','2020-05-10'),
+('LMN456','Ford','Focus','2022-02-20'),
+('XYZ987','Honda','Civic','2021-08-15');
+
+CREATE TABLE `cars` (
+  `plate` varchar(50) NOT NULL,
+  `brand` varchar(50) DEFAULT NULL,
+  `model` varchar(50) DEFAULT NULL,
+  `purchase_date` date DEFAULT NULL,
+  PRIMARY KEY (`plate`)
+);
+
+
+CREATE TABLE `contracts` (
+  `contract_number` int NOT NULL AUTO_INCREMENT,
+  `Start_date` date NOT NULL,
+  `End_date` date NOT NULL,
+  `duration` int GENERATED ALWAYS AS ((to_days(`End_date`) - to_days(`Start_date`))) STORED,
+  `client_id_c` int DEFAULT NULL,
+  `plate_c` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`contract_number`),
+  KEY `client_id_c` (`client_id_c`),
+  KEY `plate_c` (`plate_c`),
+  CONSTRAINT `contractsf1` FOREIGN KEY (`client_id_c`) REFERENCES `clients` (`client_id`),
+  CONSTRAINT `contractsf2` FOREIGN KEY (`plate_c`) REFERENCES `cars` (`plate`)
+);
